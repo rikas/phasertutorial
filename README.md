@@ -2,7 +2,7 @@
 Install http-server and run it to check the game:
 
 ```bash
-npm install http-server
+npm install -g http-server
 
 http-server
 ```
