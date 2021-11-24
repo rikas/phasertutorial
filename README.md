@@ -9,7 +9,9 @@ http-server
 
 ## Basic setup
 
-The HTML:
+First you need to create a file with the name `index.html` in the same folder where you run `http-server`.
+
+The HTML for `index.html`:
 
 ```html
 <html lang="en">
