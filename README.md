@@ -353,7 +353,7 @@ sounds.explosionSound = this.sound.add('explosion');
 
 // By the end of the method:
 sounds.music = this.sound.add('music');
-sounds.music.play();
+sounds.music.play({ volume: 0.4 );
 ```
 
 Also add all the other sounds where it makes sense to add them:
