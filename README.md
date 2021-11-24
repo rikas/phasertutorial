@@ -35,7 +35,7 @@ The HTML for `index.html`:
 The Javascript code:
 
 ```js
-var config = {
+const config = {
   type: Phaser.AUTO, // Phaser.CANVAS or Phaser.WEBGL or Phaser.AUTO
   width: 800,
   height: 600,
@@ -50,7 +50,7 @@ function preload() {}
 function create() {}
 function update() {}
 
-var game = new Phaser.Game(config);
+const game = new Phaser.Game(config);
 ```
 
 ## Load the assets
@@ -86,7 +86,7 @@ function create() {
 Before adding the floors we need to setup the physics of our game:
 
 ```js
-var config = {
+const config = {
   ...
   physics: {
     default: 'arcade',
@@ -102,7 +102,6 @@ var config = {
 Then we can start adding stuff:
 
 ```js
-  var floors;
   // The bodies in phaser can be dynamic or static
   //
   // A dynamic body is one that can move around via forces such as velocity or acceleration
@@ -113,7 +112,7 @@ Then we can start adding stuff:
   // velocity on it and when something collides with it, it never moves. Static by name, static by
   // nature. And perfect for the ground and platforms that we're going to let the player run around
   // on.
-  floors = this.physics.add.staticGroup();
+  const floors = this.physics.add.staticGroup();
   floors.create(600, 400, 'floor');
   floors.create(50, 250, 'floor');
   floors.create(750, 220, 'floor');
@@ -131,7 +130,7 @@ this.load.spritesheet('dude', 'images/dude.png', { frameWidth: 32, frameHeight: 
 ```
 
 ```js
-var player;
+let player;
 // In create():
 
 player = this.physics.add.sprite(100, 450, 'dude');
@@ -168,7 +167,7 @@ this.physics.add.collider(player, floors);
 ## Movement
 
 ```js
-var cursors;
+let cursors;
 
 // In create():
 cursors = this.input.keyboard.createCursorKeys();
@@ -207,8 +206,8 @@ this.load.image('star', 'images/star.png');
 ```
 
 ```js
-var stars;
-// in create():
+let stars;
+  // in create():
   //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
   stars = this.physics.add.group({
     key: 'star',
@@ -227,7 +226,7 @@ The stars should collide with the floors
 
 ```js
 // in create():
-this.physcs.add.collider(stars, floors);
+this.physics.add.collider(stars, floors);
 ```
 
 ### Player can pickup stars physics.add.overlap
@@ -266,8 +265,8 @@ this.load.image('bomb', 'images/bomb.png');
 ```
 
 ```js
-var bombs;
-var gameOver = false;
+let bombs;
+let gameOver = false;
 
 // in create():
 bombs = this.physics.add.group();
@@ -304,9 +303,9 @@ if (gameOver) {
 // in collectStar(), inside the if (stars.countActive(true) === 0)
 
 // Create a bomb in the half screen not containing the player
-var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+const x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
-var bomb = bombs.create(x, 16, 'bomb');
+const bomb = bombs.create(x, 16, 'bomb');
 bomb.setBounce(1);
 bomb.setCollideWorldBounds(true);
 bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
@@ -341,59 +340,66 @@ this.load.audio('explosion', 'sound/explosion.mp3');
 Then in create():
 
 ```js
+
+let sounds = {}
+
 // in create():
-this.jumpSound = this.sound.add('jump');
-this.collectSound = this.sound.add('collect');
-this.dyingSound = this.sound.add('dying');
-this.nextLevelSound = this.sound.add('nextlevel');
-this.explosionSound = this.sound.add('explosion');
+sounds.jumpSound = this.sound.add('jump');
+sounds.collectSound = this.sound.add('collect');
+sounds.dyingSound = this.sound.add('dying');
+sounds.nextLevelSound = this.sound.add('nextlevel');
+sounds.explosionSound = this.sound.add('explosion');
 
 // By the end of the method:
-this.music = this.sound.add('music');
-this.music.play();
+sounds.music = this.sound.add('music');
+sounds.music.play({ volume: 0.4 );
 ```
 
 Also add all the other sounds where it makes sense to add them:
 
 ```js
-this.jumpSound.play();
-this.collectSound.play();
-this.dyingSound.play();
-this.nextLevelSound.play();
-this.explosionSound.play();
+sounds.jumpSound.play();
+sounds.collectSound.play();
+sounds.dyingSound.play();
+sounds.nextLevelSound.play();
+sounds.explosionSound.play();
 ```
 
 ## Setup some score
 
 ```js
+let score = 0;
+let scoreText;
+
 // in create():
-var gameFont = {
+const gameFont = {
   fontSize: '30px',
   fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif'
 };
 
-this.score = 0;
-this.scoreText = this.add.text(10, 10, 'Score: 0', gameFont);
+scoreText = this.add.text(10, 10, 'Score: 0', gameFont);
 ```
 
 Then, when the player picks up a star:
 
 ```js
-this.score += 10;
-this.scoreText.setText(`Score: ${this.score}`);
+score += 10;
+scoreText.setText(`Score: ${score}`);
 ```
 
 ## Game over text
 
 
 ```js
-this.gameOverText = this.add.text(240, 150, '', gameFont);
-this.gameOverText.setFontSize(50);
-this.gameOverText.setTint(0xff0000, 0xff0000, 0xffaa00, 0xffaa00);
+let gameOverText;
+
+gameOverText = this.add.text(240, 150, '', gameFont);
+gameOverText.setFontSize(50);
+gameOverText.setTint(0xff0000, 0xff0000, 0xffaa00, 0xffaa00);
 ```
 
 Then, on explosion:
 
 ```js
-this.gameOverText.setText('GAME OVER');
+gameOverText.setText('GAME OVER');
 ```
