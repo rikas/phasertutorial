@@ -369,7 +369,7 @@ sounds.explosionSound.play();
 ## Setup some score
 
 ```js
-let store = 0;
+let score = 0;
 let scoreText;
 
 // in create():
@@ -378,7 +378,6 @@ const gameFont = {
   fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif'
 };
 
-score = 0;
 scoreText = this.add.text(10, 10, 'Score: 0', gameFont);
 ```
 
