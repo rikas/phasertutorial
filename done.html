@@ -5,7 +5,7 @@
 </head>
 <body>
 <script>
-  var config = {
+  const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
@@ -39,10 +39,13 @@
     this.load.audio('explosion', 'sound/explosion.mp3');
   }
 
-  var floors;
-  var stars;
-  var bombs;
-  var gameOver = false;
+  let floors;
+  let stars;
+  let bombs;
+  let gameOver = false;
+  let sounds = {};
+  let score = 0;
+  let scoreText;
 
   function create() {
     this.add.image(0, 0, 'sky').setOrigin(0, 0);
@@ -103,14 +106,14 @@
     cursors = this.input.keyboard.createCursorKeys();
 
     // SOUND CONFIGURATIONS
-    this.jumpSound = this.sound.add('jump');
-    this.collectSound = this.sound.add('collect');
-    this.dyingSound = this.sound.add('dying');
-    this.nextLevelSound = this.sound.add('nextlevel');
-    this.explosionSound = this.sound.add('explosion');
+    sounds.jumpSound = this.sound.add('jump');
+    sounds.collectSound = this.sound.add('collect');
+    sounds.dyingSound = this.sound.add('dying');
+    sounds.nextLevelSound = this.sound.add('nextlevel');
+    sounds.explosionSound = this.sound.add('explosion');
 
-    this.music = this.sound.add('music')
-    this.music.play({ volume: 0.2 });
+    sounds.music = this.sound.add('music')
+    sounds.music.play({ volume: 0.4 });
 
     // UI CONFIGURATIONS
     gameFont = {
@@ -118,8 +121,7 @@
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif'
     };
 
-    this.score = 0;
-    this.scoreText = this.add.text(10, 10, 'Score: 0', gameFont);
+    scoreText = this.add.text(10, 10, 'Score: 0', gameFont);
   }
 
   function update() {
@@ -128,12 +130,12 @@
     }
 
     if (cursors.left.isDown) {
-      player.setVelocityX(-160);
+      player.setVelocityX(-200);
 
       player.anims.play('left', true);
     }
     else if (cursors.right.isDown) {
-      player.setVelocityX(160);
+      player.setVelocityX(200);
 
       player.anims.play('right', true);
     }
@@ -144,29 +146,29 @@
     }
 
     if (cursors.up.isDown && player.body.touching.down) {
-      this.jumpSound.play();
+      sounds.jumpSound.play();
       player.setVelocityY(-330); // 330 px per second
     }
   }
 
   function collectStar(player, star) {
-    this.collectSound.play();
+    sounds.collectSound.play();
     star.disableBody(true, true);
 
-    this.score += 5;
-    this.scoreText.text = `Score: ${this.score}`;
+    score += 5;
+    scoreText.text = `Score: ${score}`;
 
     if (stars.countActive(true) === 0) {
-      this.score += 10;
-      this.nextLevelSound.play();
+      score += 10;
+      sounds.nextLevelSound.play();
 
       stars.children.iterate(function(child) {
         child.enableBody(true, child.x, 0, true, true);
       });
 
-      var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+      const x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
-      var bomb = bombs.create(x, 16, 'bomb');
+      const bomb = bombs.create(x, 16, 'bomb');
       bomb.setBounce(1);
       bomb.setCollideWorldBounds(true);
       bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
@@ -176,9 +178,9 @@
 
   function hitBomb(player, bomb) {
     this.physics.pause();
-    this.dyingSound.play();
-    this.explosionSound.play();
-    this.music.stop();
+    sounds.dyingSound.play();
+    sounds.explosionSound.play();
+    sounds.music.stop();
 
     this.gameOverText = this.add.text(240, 150, 'GAME OVER', gameFont);
     this.gameOverText.setFontSize(50);
@@ -190,7 +192,7 @@
     gameOver = true;
   }
 
-  var game = new Phaser.Game(config);
+  const game = new Phaser.Game(config);
   </script>
 </body>
 </html>
