@@ -35,7 +35,7 @@ The HTML for `index.html`:
 The Javascript code:
 
 ```js
-var config = {
+const config = {
   type: Phaser.AUTO, // Phaser.CANVAS or Phaser.WEBGL or Phaser.AUTO
   width: 800,
   height: 600,
@@ -50,7 +50,7 @@ function preload() {}
 function create() {}
 function update() {}
 
-var game = new Phaser.Game(config);
+const game = new Phaser.Game(config);
 ```
 
 ## Load the assets
@@ -86,7 +86,7 @@ function create() {
 Before adding the floors we need to setup the physics of our game:
 
 ```js
-var config = {
+const config = {
   ...
   physics: {
     default: 'arcade',
@@ -102,7 +102,6 @@ var config = {
 Then we can start adding stuff:
 
 ```js
-  var floors;
   // The bodies in phaser can be dynamic or static
   //
   // A dynamic body is one that can move around via forces such as velocity or acceleration
@@ -113,7 +112,7 @@ Then we can start adding stuff:
   // velocity on it and when something collides with it, it never moves. Static by name, static by
   // nature. And perfect for the ground and platforms that we're going to let the player run around
   // on.
-  floors = this.physics.add.staticGroup();
+  const floors = this.physics.add.staticGroup();
   floors.create(600, 400, 'floor');
   floors.create(50, 250, 'floor');
   floors.create(750, 220, 'floor');
