@@ -39,7 +39,6 @@
     this.load.audio('explosion', 'sound/explosion.mp3');
   }
 
-  let floors;
   let stars;
   let bombs;
   let gameOver = false;
@@ -50,7 +49,7 @@
   function create() {
     this.add.image(0, 0, 'sky').setOrigin(0, 0);
 
-    floors = this.physics.add.staticGroup();
+    const floors = this.physics.add.staticGroup();
     floors.create(400, 580, 'table');
 
     floors.create(400, 300, 'floor').setScale(0.2, 1).refreshBody();
