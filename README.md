@@ -25,14 +25,14 @@ The HTML for `index.html`:
 
 <body>
   <script>
-    // Code goes here
+    // Javascript code goes here
   </script>
 </body>
 </html>
 
 ```
 
-The JS:
+The Javascript code:
 
 ```js
 var config = {
