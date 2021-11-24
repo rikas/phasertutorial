@@ -1,4 +1,23 @@
+# Building a game with JS
+
+We will learn the basics of phaser (https://phaser.io) to build a small platformer. You can check `done.html` with the final result, if you're stuck at any point.
+
+## Other JS game engines
+
+* Babylon.js (https://www.babylonjs.com/)
+* Three.js (https://threejs.org/)
+* PixJS (https://pixijs.com/)
+* Phaser.js (https://phaser.io/)
+
+## Where to get resources?
+
+* https://opengameart.org/
+* https://www.kenney.nl/
+* https://itch.io/game-assets/
+* https://www.zapsplat.com/
+
 ## Before starting
+
 Install http-server and run it to check the game:
 
 ```bash
